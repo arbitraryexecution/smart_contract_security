@@ -15,7 +15,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const addr = "0x0";
+  const addr = "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512";
   if (addr == "0x0") {
     console.log("Please set the contract addr");
     return;

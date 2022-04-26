@@ -7,9 +7,15 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
+  // Hardhat always runs the compile task when running scripts with its command
+  // line interface.
+  //
+  // If this script is run directly using `node` you may want to call compile
+  // manually to make sure everything is compiled
+  // await hre.run('compile');
 
-  // XXX: Insert address here
-  const addr = "0x0";
+  // We get the contract to deploy
+  const addr = "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6";
   if (addr == "0x0") {
     console.log("Please set the contract addr");
     return;
@@ -21,13 +27,12 @@ async function main() {
 
   var ch2 = new ethers.Contract(addr, abi, wallet);
 
-  // XXX: Insert function selector here
-  var func_selector = "0x0"
-  // XXX: Pack the function selector and any args here (replace with correct values and the correct number of args)
-  var packed_data = ethers.utils.solidityPack(["bytes4", "uint", "uint", "uint"], [func_selector, 1, 2, 3]);
+  var func_selector = "0xe6581e4c"
+  var answer = 10;
+  var packed_data = ethers.utils.solidityPack(["bytes4", "uint"], [func_selector, answer]);
 
-  // XXX: One additional override must be set here
   var tx = await wallet.sendTransaction({
+    value: ethers.utils.parseUnits("1", "wei"),
     to: ch2.address,
     data: packed_data,
   });
@@ -37,7 +42,7 @@ async function main() {
   let iface = new ethers.utils.Interface(abi);
   let log;
   if (rec.logs.length != 0) {
-    log = iface.parseLog(rec.logs[0]); // Here you can add your own logic to find the correct log
+    log = iface.parseLog(rec.logs[0]); // here you can add your own logic to find the correct log
     console.log('Beat the challenge, Winner event emitted!')
   }
 }
