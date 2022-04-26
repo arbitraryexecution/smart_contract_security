@@ -15,6 +15,7 @@ contract SimpleBank {
      */
     function deposit() public payable {
         balances[msg.sender] += msg.value;
+        totalDeposited += msg.value;
     }
 
     /**
@@ -60,6 +61,7 @@ contract SimpleBank {
 
     function echidna_test() public returns (bool){
         // echidna test logic goes here
+        return balances[msg.sender] <= totalDeposited;
     }
 
     // TODO 

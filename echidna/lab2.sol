@@ -68,7 +68,16 @@ contract ArrayUtil {
     bool mismatch = false;
 
     function testBehavior(uint256[] calldata array) public {
-        // implement differntial fuzzing here
+        bool indexDiff = false;
+
+        for (uint256 i = 0; i < array.length; i++) {
+            if (indexOf(i, array) != indexOfFromEnd(i, array)) {
+                indexDiff = true;
+                break;
+            }
+        }
+
+        mismatch = duplicates(array) != indexDiff;
     }
 
     function echidna_test() public returns (bool){

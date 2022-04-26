@@ -51,4 +51,8 @@ contract WeakCTF {
             snaggedPrize = true;
         }
     }
+
+    function echidna_test() public returns (bool) {
+        return !snaggedPrize;
+    }
 }
