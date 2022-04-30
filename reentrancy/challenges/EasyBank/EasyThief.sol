@@ -17,11 +17,11 @@ contract EasyThief {
     //
     // CHALLENGE: IMPLEMENT PART OF THE EXPLOIT HERE
     //
-    fallback() external payable {
+    receive() external payable {
     }
 
     //
-    // CHALLENGE: IMPLEMENT PART OF THE EXPLOIT HERE
+    // CHALLENGE: THIS IS CALLED FIRST TO START THE STEAL
     //
     function steal() external payable {
     }

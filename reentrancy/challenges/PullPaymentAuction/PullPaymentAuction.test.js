@@ -13,7 +13,7 @@ describe('Auction', function () {
 
   before(async function () {
     //
-    // SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE
+    // SETUP SCENARIO 
     //
 
     [deployer, attacker, bidder] = await ethers.getSigners();
@@ -32,7 +32,7 @@ describe('Auction', function () {
 
   describe('EXPLOIT FIXED', function () {
     //
-    // TEST THAT EXPLOIT HAS BEEN FIXED - NO NEED TO CHANGE ANYTHING HERE
+    // TEST THAT EXPLOIT HAS BEEN FIXED 
     //
 
     let auctionBlockerAttackerContract;

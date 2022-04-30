@@ -12,7 +12,7 @@ contract PullPaymentAuctionBlockerAttacker {
         auction = PullPaymentAuction(auctionAddress);
     }
 
-    fallback() external payable {
+    receive() external payable {
         revert("Bahahaha! Attacker has blocked the auction!");
     }
 

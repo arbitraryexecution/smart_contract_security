@@ -20,8 +20,8 @@ contract PullPaymentAuction {
             require(success, string(payload)); // if this call consistently fails, no one else can bid
         }
 
-       highestBidder = msg.sender;
-       highestBid = msg.value;
+        highestBidder = msg.sender;
+        highestBid = msg.value;
     }
 
     //

