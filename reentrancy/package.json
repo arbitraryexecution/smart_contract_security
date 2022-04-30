@@ -16,6 +16,6 @@
     "reentrancyguardbank": "npx hardhat test challenges/ReentrancyGuardBank/ReentrancyGuardBank.test.js",
     "auction": "npx hardhat test challenges/Auction/Auction.test.js",
     "pullpaymentauction": "npx hardhat test challenges/PullPaymentAuction/PullPaymentAuction.test.js",
-    "all": "npx run easybank && npx run checkseffectsinteractionsbank && npx run reentrancyguardbank && npx run auction && npx run pullpaymentauction"
+    "all": "npm run easybank && npm run checkseffectsinteractionsbank && npm run reentrancyguardbank && npm run auction && npm run pullpaymentauction"
   }
 }

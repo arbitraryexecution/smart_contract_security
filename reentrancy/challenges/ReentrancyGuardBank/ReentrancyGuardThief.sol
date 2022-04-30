@@ -14,7 +14,7 @@ contract ReentrancyGuardThief {
         bank = ReentrancyGuardBank(bankAddress);
     }
 
-    fallback() external payable {
+    receive() external payable {
         if (address(bank).balance >= msg.value) {
             bank.withdraw();
         }
