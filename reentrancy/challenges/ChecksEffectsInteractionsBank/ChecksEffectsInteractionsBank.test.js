@@ -58,7 +58,7 @@ describe('ChecksEffectsInteractionsBank', function () {
       ).to.be.revertedWith('User balance insufficient for withdrawal');
 
       thiefEndingBalance = await provider.getBalance(thief.address);
-      // not checking exact amounts here due to gas costs offseting precise balances
+      // not checking exact amounts here due to gas costs offsetting precise balances
       expect(thiefEndingBalance.lte(thiefBeginningBalance)).to.be.true;
     });
   });
