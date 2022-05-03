@@ -14,7 +14,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const flag = await hre.ethers.getContractAt("RedFlag", "0xe42a6fC1aC0c4CCa1ABaE1B174B7D020652BA259")
+  const flag = await hre.ethers.getContractAt("RedFlag", "0x19d4e9bfd551D478814EC686113Ba9Ffa1638407")
   console.log("Red Flag address:", flag.address);
 
   // XXX: Set the correct answer and value here!
