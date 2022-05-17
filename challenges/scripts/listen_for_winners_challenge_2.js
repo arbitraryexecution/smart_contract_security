@@ -28,7 +28,7 @@ async function main() {
   var currentState = await wled.get();
 
   let filter = challenge.filters.Transfer("0x0000000000000000000000000000000000000000", null);
-  challenge.once(filter, async (srcAddr, dstAddr, tokenId) => {
+  challenge.on(filter, async (srcAddr, dstAddr, tokenId) => {
 
     if (srcAddr == "0x0000000000000000000000000000000000000000") {
 

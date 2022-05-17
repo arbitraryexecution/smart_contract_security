@@ -9,7 +9,7 @@ const wled = require('../../wled_integration');
 
 async function main() {
   // Addr of NFT contract
-  const addr = "0xe42a6fC1aC0c4CCa1ABaE1B174B7D020652BA259";
+  const addr = "0xfe686b22a5a9B3f8424fD2E27152519Dd5587A00";
   if (addr == "0x0") {
     console.log("Please set the contract addr");
     return;
@@ -35,7 +35,7 @@ async function main() {
       console.log(`${ dstAddr } won the game!`);
 
       // Do the WLED stuff
-      await wled.changeToGreen();
+      await wled.changeToViolet();
       // Keep it red for 15 seconds
       await wled.delay(15000);
       // Restore the original colors
