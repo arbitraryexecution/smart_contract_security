@@ -10,22 +10,20 @@ async function main() {
 
     const [sender] = await ethers.getSigners();
 
+    const token_contract = await ethers.getContractAt("WaffleToken", "0xAd64B7edaCf83907450741ed97a8A4F230F79152");
+
     // List of all addresses
-    var addrs = [
-        "0x0000000000000000000000000000000000000000",
-        "0x000000000000000000000000000000000000dEaD",
-    ]
+    const addrs = [
+      "0x0000000000000000000000000000000000000000",
+    ];
 
     // Send out ETH to all recipients
     var tx;
     for (var i=0; i < addrs.length; i++) {
-        console.log("Sending 1 ETH to " + addrs[i])
-        tx = await sender.sendTransaction({value: ethers.utils.parseEther("1"), to: addrs[i]})
+      console.log(addrs[i]);
+        tx = await token_contract.transfer(addrs[i], ethers.utils.parseEther("10"));
+        await tx.wait();
     }
-
-    // wait for the last transaction
-    await tx.wait()
-
 
 }
 
