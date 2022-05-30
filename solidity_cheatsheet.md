@@ -53,10 +53,6 @@ uint256 immutable varB;
 ========
 - `bool`: Boolean which is either `true` or `false`
   - Example: `bool foo = true;`
-- `array`:
-  - Example: `uint256[] arrayOfNumbers;`
-  - Example: `arrayOfNumbers.push(10);`
-  - Example: `uint256 foo = arrayOfNumbers.pop();`
 - `int/uint`: alias for `int256/uint256`
   - `int8/uint8`: 1 byte number
   - `int16/uint16`: 2 byte number
@@ -79,8 +75,15 @@ uint256 immutable varB;
         ```
     - `delegatecall`: Issue a low level delegatecall on the address
 - `address payable`: same as `address` but also has the `transfer` and `send` functions
+- `array`:
+  - Example: `uint256[] arrayOfNumbers;`
+  - Example: `arrayOfNumbers.push(10);`
+  - Example: `uint256 foo = arrayOfNumbers.pop();`
+- `mapping`: Same idea as a python dictionary. key-value pairing
+  - Example: `mapping(address => bool) allowed;`
+  - Example: `allowed[msg.sender] = true`
 
-> **_NOTE:__** Min and max values for `int/uint` types can be done via `type(T).min` or `type(T).max`
+> **_NOTE:_** Min and max values for `int/uint` types can be done via `type(T).min` or `type(T).max`
 > Example: `type(int8).min == -128` and `type(int8).max == 127`.
 
 > **_NOTE:_** To send ether to a contract, the variable must be of type `address payable` or
