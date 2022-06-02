@@ -88,7 +88,11 @@ abstract contract Governance is GovernanceStructs, Messages, Setters, ERC1967Upg
         recipient.transfer(transfer.amount);
     }
 
-    function upgradeImplementation(address newImplementation) internal {
+    function upgradeImplementation(address newImplementation) public {
+
+        // Ensure only a guardian can upgrade the implementation contract
+        require(_state.guardianSets[0].keys[0] == msg.sender, "Must be the guardian!");
+
         address currentImplementation = _getImplementation();
 
         _upgradeTo(newImplementation);
