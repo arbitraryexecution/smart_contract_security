@@ -8,19 +8,20 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "hardhat/console.sol";
 
 contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
+
     struct levelInfo {
         bool enabled;
         uint256 numWinners;
         mapping(address => bool) winners;
     }
 
-    mapping(address => levelInfo) levels;
+    mapping(address => levelInfo) public levels;
 
-    address levelOne;
-    address levelTwo;
-    address levelThree;
-    address levelFour;
-    address levelFive;
+    address public levelOne;
+    address public levelTwo;
+    address public levelThree;
+    address public levelFour;
+    address public levelFive;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -60,9 +61,13 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
     }
 
     function determineWinnings(address challengeAddr) public view returns (uint256 amt) {
-        levelInfo storage l = levels[challengeAddr];
-        uint256 numWinners = l.numWinners;
+        // Proper operation of this function requires that this function preceeds adding a winner
+        uint256 numWinners = levels[challengeAddr].numWinners;
 
+        // First winner should receive 100 tokens
+        // Second winner should receive 85 tokens
+        // Third winner should receive 70 tokens
+        // Any other winners should receive 50 tokens
         if (numWinners == 0) return 100;
         else if (numWinners == 1) return 85;
         else if (numWinners == 2) return 70;
