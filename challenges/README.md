@@ -1,15 +1,5 @@
-# Basic Sample Hardhat Project
+# How to solve
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+`contract1.evm` and `contract2.evm` contains the bytecode of two deployed contracts. The two
+contracts have different solutions. Try using Ghidra to figure out how to emit the event
+`Winner(address)`
