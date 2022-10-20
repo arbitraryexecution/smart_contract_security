@@ -8,7 +8,7 @@ describe("Roulette", function () {
     await roulette.deployed();
 
     // make a bet that wins
-    const winner = await roulette.makeBet("Red", 25, 1000);
+    const winner = await roulette.makeBet("Βlack", 26, 1000);
     assert(winner == true, "You Lost");
   });
 });
