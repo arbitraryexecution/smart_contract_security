@@ -1,14 +1,11 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-interface Challenge0 {
-    function callMe() external;
-}
-
 contract Challenge0 {
     event Winner(address);
 
-    function callMe() external {
+    function callMe() external payable {
+	require(msg.value >= 5 ether, "This contract requires 5 ether!");
 	emit Winner(msg.sender);
     }
 }

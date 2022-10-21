@@ -1,10 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-interface Challenge3 {
-    function callMe(uint) external;
-}
-
 contract Challenge3 {
     event Winner(address);
     private uint secret;
@@ -14,8 +10,8 @@ contract Challenge3 {
     }
 
     function callMe(uint _secret) external {
-	require(msg.sender != tx.origin);
-	require(_secret == secret);
+	require(msg.sender != tx.origin, "Must be called from a contract!");
+	require(_secret == secret, "Wrong password!");
 	emit Winner(tx.origin);
     }
 }
