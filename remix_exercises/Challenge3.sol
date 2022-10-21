@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 contract Challenge3 {
     event Winner(address);
-    private uint secret;
+    uint private secret;
 
     constructor(uint _secret) {
         secret = _secret;
