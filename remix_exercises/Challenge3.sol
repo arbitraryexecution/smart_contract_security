@@ -6,12 +6,12 @@ contract Challenge3 {
     private uint secret;
 
     constructor(uint _secret) {
-	secret = _secret;
+        secret = _secret;
     }
 
     function callMe(uint _secret) external {
-	require(msg.sender != tx.origin, "Must be called from a contract!");
-	require(_secret == secret, "Wrong password!");
-	emit Winner(tx.origin);
+        require(msg.sender != tx.origin, "Must be called from a contract!");
+        require(_secret == secret, "Wrong password!");
+        emit Winner(tx.origin);
     }
 }

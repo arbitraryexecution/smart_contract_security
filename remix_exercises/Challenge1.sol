@@ -5,7 +5,7 @@ contract Challenge1 {
     event Winner(address);
 
     function callMe() external {
-	require(msg.sender != tx.origin, "Must be called from a contract!");
-	emit Winner(tx.origin);
+        require(msg.sender != tx.origin, "Must be called from a contract!");
+        emit Winner(tx.origin);
     }
 }
