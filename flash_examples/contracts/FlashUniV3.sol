@@ -51,6 +51,7 @@ contract FlashUniV3 is IUniswapV3FlashCallback, PeripheryImmutableState, Periphe
 
         // your code here
         // e.g. pay back ether from contract using PeripheryPayments
+        // remember to send enough msg.value to cover the fees
         require(token1 == _weth);
         require(amount0Owed == 0);
 
