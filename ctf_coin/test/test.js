@@ -22,7 +22,6 @@ describe("CTF", function () {
       levelTwoAddr,
       levelThreeAddr,
       levelFourAddr,
-      levelFiveAddr
     ] = await ethers.getSigners();
 
     const gas = await ethers.provider.getGasPrice()
@@ -36,10 +35,9 @@ describe("CTF", function () {
         levelTwoAddr.address,
         levelThreeAddr.address,
         levelFourAddr.address,
-        levelFiveAddr.address,
       ],
       {
-        initializer: 'initialize(string,string,address,address,address,address,address)',
+        initializer: 'initialize(string,string,address,address,address,address)',
         gasPrice: gas
       }
     );
@@ -56,13 +54,12 @@ describe("CTF", function () {
       levelTwoAddr,
       levelThreeAddr,
       levelFourAddr,
-      levelFiveAddr,
       ctf,
     };
   };
 
   describe("Deployment", function () {
-    it("Test level one", async function () {
+    xit("Test level one", async function () {
 
       const {
         owner,
@@ -135,7 +132,6 @@ describe("CTF", function () {
         levelTwoAddr,
         levelThreeAddr,
         levelFourAddr,
-        levelFiveAddr,
         ctf,
       } = await loadFixture(deployOneYearLockFixture);
 

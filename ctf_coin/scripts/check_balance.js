@@ -8,26 +8,16 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const gas = await ethers.provider.getGasPrice()
-  const CTFToken = await ethers.getContractFactory("CTFToken");
-  const ctf = await upgrades.deployProxy(
-    CTFToken,
-    [
-      "CTF Token",
-      "CTF",
-      process.env.CTF0_ADDR,
-      process.env.CTF1_ADDR,
-      process.env.CTF2_ADDR,
-      process.env.CTF3_ADDR,
-    ],
-    {
-      initializer: 'initialize(string,string,address,address,address,address)',
-      gasPrice: gas
-    }
-  );
-  await ctf.deployed();
+  var addrToCheck = "";
 
-  console.log(`CTF Coin deployed to: ${ctf.address}`);
+  const ctf = await ethers.getContractAt("CTFToken", process.env.CTFTOKEN_ADDR);
+
+  var balance = await ctf.balanceOf(addrToCheck);
+  console.log("Balance: %s", balance);
+
+  balance = await ctf.totalSupply();
+  console.log("Total Supply: %s", balance);
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere

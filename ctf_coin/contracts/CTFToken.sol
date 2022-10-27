@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.9;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
 
-import "hardhat/console.sol";
+contract CTFToken is ERC20BurnableUpgradeable, OwnableUpgradeable {
 
-contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
+    event ChallengeSolved(address indexed winner, uint256 indexed levelNum);
 
     struct levelInfo {
         bool enabled;
@@ -21,7 +20,6 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
     address public levelTwo;
     address public levelThree;
     address public levelFour;
-    address public levelFive;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -34,8 +32,7 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
         address _levelOne,
         address _levelTwo,
         address _levelThree,
-        address _levelFour,
-        address _levelFive
+        address _levelFour
     ) public initializer {
         __ERC20_init(name, symbol);
         __Ownable_init();
@@ -43,11 +40,10 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
         setLevelTwoAddr(_levelTwo);
         setLevelThreeAddr(_levelThree);
         setLevelFourAddr(_levelFour);
-        setLevelFiveAddr(_levelFive);
     }
 
     modifier isValidLevel(address contractAddr) {
-        require(levels[msg.sender].enabled, "Not a valid caller!");
+        require(levels[contractAddr].enabled, "Not a valid caller!");
         _;
     }
 
@@ -68,11 +64,10 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
         // Second winner should receive 85 tokens
         // Third winner should receive 70 tokens
         // Any other winners should receive 50 tokens
-        if (numWinners == 0) return 100;
-        else if (numWinners == 1) return 85;
-        else if (numWinners == 2) return 70;
-
-        return 50;
+        if (numWinners == 0) amt = 100;
+        else if (numWinners == 1) amt = 85;
+        else if (numWinners == 2) amt = 70;
+        else amt = 50;
     }
 
     function challengeOneSolved(address winner)
@@ -88,6 +83,8 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
         levelInfo storage l = levels[msg.sender];
         l.numWinners++;
         l.winners[winner] = true;
+
+        emit ChallengeSolved(winner, 1);
     }
 
     function challengeTwoSolved(address winner)
@@ -103,6 +100,8 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
         levelInfo storage l = levels[msg.sender];
         l.numWinners++;
         l.winners[winner] = true;
+
+        emit ChallengeSolved(winner, 2);
     }
 
     function challengeThreeSolved(address winner)
@@ -118,6 +117,8 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
         levelInfo storage l = levels[msg.sender];
         l.numWinners++;
         l.winners[winner] = true;
+
+        emit ChallengeSolved(winner, 3);
     }
 
     function challengeFourSolved(address winner)
@@ -133,21 +134,8 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
         levelInfo storage l = levels[msg.sender];
         l.numWinners++;
         l.winners[winner] = true;
-    }
 
-    function challengeFiveSolved(address winner)
-        external
-        isValidLevel(msg.sender)
-        alreadyClaimed(winner)
-    {
-        require(msg.sender == levelFive, "Only the challenge can call this function!");
-
-        uint256 amt = determineWinnings(levelFive);
-        _mint(winner, amt);
-
-        levelInfo storage l = levels[msg.sender];
-        l.numWinners++;
-        l.winners[winner] = true;
+        emit ChallengeSolved(winner, 4);
     }
 
     function mint(address to, uint256 amount) public onlyOwner {
@@ -171,11 +159,6 @@ contract CTFToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
 
     function setLevelFourAddr(address challenge) public onlyOwner {
         levelFour = challenge;
-        levels[challenge].enabled = true;
-    }
-
-    function setLevelFiveAddr(address challenge) public onlyOwner {
-        levelFive = challenge;
         levels[challenge].enabled = true;
     }
 }
