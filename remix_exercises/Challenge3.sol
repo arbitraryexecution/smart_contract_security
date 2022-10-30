@@ -5,7 +5,7 @@ contract Challenge3State {
     mapping (address => uint) balances;
 
     function withdraw() external {
-        uint balance = balances[msg.sender]
+        uint balance = balances[msg.sender];
         if (balance > 0) {
             payable(msg.sender).transfer(balance);
         }
