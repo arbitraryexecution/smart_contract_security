@@ -27,14 +27,14 @@ contract CTFToken is ERC20BurnableUpgradeable, OwnableUpgradeable {
     }
 
     function initialize(
-        string memory name,
-        string memory symbol,
+        string memory _name,
+        string memory _symbol,
         address _levelOne,
         address _levelTwo,
         address _levelThree,
         address _levelFour
     ) public initializer {
-        __ERC20_init(name, symbol);
+        __ERC20_init(_name, _symbol);
         __Ownable_init();
         setLevelOneAddr(_levelOne);
         setLevelTwoAddr(_levelTwo);
