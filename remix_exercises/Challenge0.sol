@@ -5,7 +5,8 @@ contract Challenge0 {
     event Winner(address);
 
     function callMe() external payable {
-        require(msg.value >= 5 ether, "This contract requires 5 ether!");
+        require(msg.value >= 0.1 ether, "This contract requires 0.1 ether!");
         emit Winner(msg.sender);
+        payable(msg.sender).transfer(msg.value);
     }
 }

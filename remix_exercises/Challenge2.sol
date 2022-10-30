@@ -3,15 +3,20 @@ pragma solidity ^0.8.0;
 
 contract Challenge2 {
     event Winner(address);
-    uint public secret;
+    uint public a;
+    uint public b;
 
-    constructor(uint _secret) {
-        secret = _secret;
+    function setVar1(uint _a) external {
+        a = _a;
     }
 
-    function callMe(uint _secret) external {
+    function setVar2(uint _b) external {
+        b = _b;
+    }
+
+    function callMe() external {
         require(msg.sender != tx.origin, "Must be called from a contract!");
-        require(_secret == secret, "Wrong password!");
+        require(a*b == 42, "Not the answer");
         emit Winner(tx.origin);
     }
 }
