@@ -9,7 +9,7 @@ describe("CTF", function () {
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
 
-  async function deployOneYearLockFixture() {
+  async function deployCTFToken() {
     // Contracts are deployed using the first signer/account by default
     const [
       owner,
@@ -59,7 +59,7 @@ describe("CTF", function () {
   };
 
   describe("Deployment", function () {
-    xit("Test level one", async function () {
+    it("Test level one", async function () {
 
       const {
         owner,
@@ -74,7 +74,7 @@ describe("CTF", function () {
         levelFourAddr,
         levelFiveAddr,
         ctf,
-      } = await loadFixture(deployOneYearLockFixture);
+      } = await loadFixture(deployCTFToken);
 
       var tx = await ctf.connect(levelOneAddr).challengeOneSolved(user1.address);
       await tx.wait();
@@ -133,7 +133,7 @@ describe("CTF", function () {
         levelThreeAddr,
         levelFourAddr,
         ctf,
-      } = await loadFixture(deployOneYearLockFixture);
+      } = await loadFixture(deployCTFToken);
 
       var tx = await ctf.connect(levelTwoAddr).challengeTwoSolved(user1.address);
       await tx.wait();

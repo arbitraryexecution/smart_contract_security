@@ -6,7 +6,6 @@
 const { ethers } = require("hardhat");
 const hre = require("hardhat");
 const { WebhookClient } = require('discord.js');
-const wled = require('../../wled_integration');
 
 async function main() {
   // Addr of NFT contract
@@ -22,7 +21,6 @@ async function main() {
   // Change the polling interval from 4000ms to 1000ms for the event listener
   challenge.provider.pollingInterval = 1000;
   // Save off the old state
-  var currentState = await wled.get();
   const webhookClient = new WebhookClient({ url: process.env.DISCORD_URL });
 
   let filter = challenge.filters.ChallengeSolved(null, null);
@@ -36,37 +34,27 @@ async function main() {
     if (levelNum == 1) {
       // make the text red
       msg = "```diff\r\n" + `- ${msg}\r\n` + "```";
-      await wled.changeToRed();
 
     // CTF level 2
     } else if (levelNum == 2) {
       // make the text green
       msg = "```diff\r\n" + `+ ${msg}\r\n` + "```";
-      await wled.changeToGreen();
 
     // CTF level 3
     } else if (levelNum == 3) {
       // make the text blue
       msg = "```ini\r\n" + `[${msg}]\r\n` + "```";
-      await wled.changeToBlue();
 
     // CTF level 4
     } else if (levelNum == 4) {
       // make the text yellow
       msg = "```fix\r\n" + `${msg}\r\n` + "```";
-      await wled.changeToYellow();
     }
 
     webhookClient.send({
       content: msg,
       username: 'CTF Bot',
     });
-
-    // Keep it red for 15 seconds
-    await wled.delay(15000);
-    // Restore the original colors
-    await wled.restoreState(currentState);
-
   });
 }
 

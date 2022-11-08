@@ -18,7 +18,7 @@ async function main() {
       process.env.CTF0_ADDR,
       process.env.CTF1_ADDR,
       process.env.CTF2_ADDR,
-      "0x0000000000000000000000000000000000000000",
+      process.env.CTF3_ADDR,
     ],
     {
       initializer: 'initialize(string,string,address,address,address,address)',
