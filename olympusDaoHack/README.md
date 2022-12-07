@@ -2,7 +2,7 @@
 
 ## Background
 
-On October 21, 2022 the Olympus DAO was exploited for approximately 300K of OHM tokens. After analysis, it was found that the Olympus DAO contract exposes a `redeem` function which contains an exploitable vulnerability.
+On October 21, 2022 the Olympus DAO was exploited for approximately 300K of OHM tokens. After analysis, it was found that an Olympus DAO contract exposed a `redeem` function which contains an exploitable vulnerability.
 
 ## Exercise
 
@@ -24,6 +24,5 @@ On October 21, 2022 the Olympus DAO was exploited for approximately 300K of OHM 
     }
 ```
 
-* Olympus DAO Contract Address: `0x007fe7c498a2cf30971ad8f2cbc36bd14ac51156`
+* Olympus DAO(BondFixedExpiryTeller) Contract Address: `0x007fe7c498a2cf30971ad8f2cbc36bd14ac51156`
 * OHM Token Contract Address: `0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5`
-
