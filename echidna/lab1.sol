@@ -47,7 +47,7 @@ contract WeakCTF {
      * @dev Attempts to go through the gates, do you feel lucky?
      */
     function walkThrough() public {
-        if (flopCount > 10 && gate1 && gate2 && luckyNumber * 0x1_b + 9e0 ^ 0x7_a == 42) {
+        if (flopCount > 10 && gate1 && gate2 && luckyNumber * 0x1_b + 9e0 ^ 0x7_a == 40) {
             snaggedPrize = true;
         }
     }
